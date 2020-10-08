@@ -1,0 +1,14 @@
+.page-wrapper {
+  background-color: white;
+  width: calc(100% - 30rem);
+  height: calc(100% - 8rem);
+  position: fixed;
+  top: 8rem;
+  left: 30rem;
+  overflow: auto;
+
+  &__dalem {
+    width: 100%;
+    min-width: 100rem;
+  }
+}

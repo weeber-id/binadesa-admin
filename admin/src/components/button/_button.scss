@@ -1,0 +1,71 @@
+.btn {
+  border: none;
+  font-size: 1.8rem;
+  color: var(--color-black);
+  background-color: var(--color-yellow);
+  padding: 1rem 3rem;
+  cursor: pointer;
+  font-weight: 700;
+  border-radius: 1rem;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+
+  @media only screen and (max-width: 31.25em) {
+    font-size: 1.6rem;
+  }
+
+  &:hover {
+    background-color: darken(#f9cd35, 10%);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &--grey {
+    background-color: var(--color-grey-2);
+    color: var(--color-white);
+
+    &:hover.btn {
+      background-color: var(--color-dark-grey);
+    }
+  }
+
+  &--green {
+    background-color: var(--color-green);
+    color: var(--color-white);
+
+    &:hover.btn {
+      background-color: lighten($color: #44ada8, $amount: 10%);
+    }
+  }
+
+  &--outlined {
+    background-color: transparent;
+    border: 3px solid var(--color-red);
+
+    &:hover.btn {
+      background-color: var(--color-red);
+      color: var(--color-white);
+    }
+
+    &.btn--green {
+      border: 3px solid var(--color-green);
+
+      &:hover {
+        background-color: var(--color-green);
+      }
+    }
+  }
+
+  &--white {
+    background-color: var(--color-white);
+    color: var(--color-black);
+
+    &:hover.btn {
+      background-color: var(--color-dark-grey);
+      color: var(--color-white);
+    }
+  }
+}

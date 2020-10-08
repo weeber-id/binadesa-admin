@@ -1,0 +1,14 @@
+.berita {
+  padding: 4rem;
+
+  & > .btn {
+    margin-bottom: 4rem;
+    align-self: flex-start;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+  }
+}

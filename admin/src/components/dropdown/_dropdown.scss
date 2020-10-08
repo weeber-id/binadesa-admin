@@ -1,0 +1,56 @@
+.dropdown {
+  background-color: var(--color-white);
+  position: relative;
+  border-radius: 1rem;
+  cursor: pointer;
+
+  &__options {
+    position: absolute;
+    top: 4.5rem;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-white);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 4px rgba(black, 0.25);
+    z-index: 10;
+  }
+
+  &__option {
+    cursor: pointer;
+    padding: 1rem 2rem;
+
+    &:hover {
+      background-color: var(--color-yellow);
+    }
+
+    &.active {
+      background-color: var(--color-yellow);
+    }
+  }
+
+  &__select {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1.4rem;
+    padding: 1rem 2rem;
+  }
+
+  &__text {
+    color: var(--color-grey-2);
+    font-size: 1.4rem;
+    line-height: 1.12;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    @media only screen and (max-width: 31.25em) {
+      font-size: 1.4rem;
+    }
+
+    &.active {
+      color: var(--color-black);
+    }
+  }
+}

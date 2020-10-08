@@ -1,0 +1,118 @@
+.data-pengajuan {
+  .table {
+    background-color: var(--color-green);
+    border-radius: 3rem;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 5rem;
+
+    &__info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4rem 8rem 2rem 8rem;
+
+      .heading-tertiary {
+        color: var(--color-white);
+      }
+    }
+
+    &__head,
+    &__row {
+      display: grid;
+      grid-template-columns: repeat(2, 2fr) 2.4fr 3fr 1.5fr 2fr;
+      height: 6rem;
+      align-items: center;
+    }
+
+    &__head {
+      background-color: var(--color-yellow);
+      padding: 0 8rem;
+      font-weight: 700;
+    }
+
+    .container {
+      padding: 0 calc(8rem - 15px) 0 8rem;
+      padding-bottom: 4rem;
+    }
+
+    &__row {
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba($color-green, 0.2);
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid var(--color-black);
+      }
+    }
+
+    &__body {
+      background-color: var(--color-white);
+      height: 35rem;
+      overflow-y: auto;
+    }
+
+    &__column {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-align: left;
+      padding: 0 2rem;
+      font-size: 1.4rem;
+
+      &--non-overflow {
+        overflow: unset;
+      }
+
+      &--loading {
+        height: 50%;
+
+        &::before {
+          border-radius: 4rem;
+          content: '';
+          height: 80%;
+          width: 100%;
+          display: block;
+          animation: colorTransition 1.5s ease infinite;
+        }
+      }
+
+      &:nth-child(5),
+      &:last-child {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+      }
+
+      .icon-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 3rem;
+        width: 3rem;
+        border-radius: 50%;
+
+        &:hover {
+          background-color: rgba($color-black, 0.25);
+        }
+      }
+
+      .icons {
+        display: flex;
+        align-items: center;
+      }
+
+      .btn {
+        font-size: 1.6rem;
+      }
+
+      .dropdown {
+        box-shadow: 0 4px 8px rgba($color-black, 0.25);
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+@mixin lineDecorator($top, $left, $width, $height) {
+  content: '';
+  position: absolute;
+  top: $top;
+  left: $left;
+  width: $width;
+  height: $height;
+  background-color: var(--color-red);
+}

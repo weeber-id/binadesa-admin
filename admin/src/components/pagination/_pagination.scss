@@ -1,0 +1,44 @@
+.pagination {
+  display: grid;
+  grid-template-columns: 7rem 1fr 7rem;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(black, 0.25);
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+  margin-bottom: 7rem;
+  max-width: max-content;
+
+  &__next {
+    justify-self: flex-end;
+  }
+
+  &__next,
+  &__prev {
+    cursor: pointer;
+    color: var(--color-dark-grey);
+    user-select: none;
+
+    &:hover {
+      color: var((--color-yellow));
+    }
+  }
+
+  &__number {
+    cursor: pointer;
+    color: var(--color-dark-grey);
+    min-width: 2ch;
+    display: inline-block;
+
+    &.active {
+      color: var(--color-yellow);
+    }
+
+    &:hover {
+      color: var((--color-yellow));
+    }
+
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
+  }
+}

@@ -1,0 +1,138 @@
+.input {
+  &__input {
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.8rem;
+    background-color: var(--color-white);
+    color: var(--color-black);
+    border-radius: 1rem;
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    min-width: unset;
+    width: 100%;
+
+    @media only screen and (max-width: 31.25em) {
+      font-size: 1.4rem;
+    }
+
+    &--grey {
+      background-color: var(--color-grey);
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: var(--color-grey-2);
+    }
+  }
+
+  &__label {
+    color: var(--color-white);
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+}
+
+.radio {
+  display: grid;
+  grid-template-columns: min-content max-content;
+  grid-gap: 0.5em;
+  font-size: 1.8rem;
+  color: var(--color-white);
+  width: fit-content;
+
+  &__input {
+    display: flex;
+
+    input:checked + .radio__control {
+      background-color: currentColor;
+    }
+
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+
+      &:focus + .radio__control {
+        box-shadow: 0 0 0 0.05em #fff, 0 0 0.15em 0.1em currentColor;
+      }
+    }
+  }
+
+  &__label {
+    line-height: 1;
+    transition: 180ms all ease-in-out;
+  }
+
+  &__control {
+    display: block;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    border: 0.1em solid currentColor;
+    transform: translateY(-0.05em);
+    cursor: pointer;
+  }
+}
+
+.input-file {
+  &__container {
+    background-color: var(--color-white);
+    border-radius: 1rem;
+    width: 100%;
+    height: 4rem;
+    padding: 1rem 0.5rem 1rem 2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &.required {
+      border: 1px solid var(--color-red);
+      box-shadow: 0 0 5px rgba(#f3285b, 0.9);
+    }
+
+    input[type='file'] {
+      position: absolute;
+      height: 0;
+      width: 0;
+      top: 0;
+      left: 0;
+      z-index: -1111;
+      opacity: 0;
+    }
+  }
+
+  &__filename {
+    font-size: 1.8rem;
+    line-height: 1.12;
+    color: var(--color-grey-2);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    @media only screen and (max-width: 31.25em) {
+      font-size: 1.4rem;
+    }
+
+    &.active {
+      color: var(--color-black);
+    }
+  }
+
+  &__btn {
+    font-size: 1.2rem;
+    border: 2px solid var(--color-green);
+    padding: 3px 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: var(--color-green);
+      color: var(--color-white);
+    }
+  }
+}

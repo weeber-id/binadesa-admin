@@ -1,0 +1,13 @@
+@keyframes colorTransition {
+  0% {
+    background-color: var(--color-dark-grey);
+  }
+
+  50% {
+    background-color: var(--color-grey-2);
+  }
+
+  100% {
+    background-color: var(--color-dark-grey);
+  }
+}
