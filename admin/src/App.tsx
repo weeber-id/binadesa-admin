@@ -6,6 +6,7 @@ import {
   LoginPage,
   Pengajuan,
   PengajuanDetail,
+  CreateUpdateBerita,
 } from './pages';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/keluhan" exact component={Keluhan} />
         <Route path="/berita" exact component={Berita} />
         <Route path="/pengajuan/:id" exact component={PengajuanDetail} />
+        <Route path="/berita/:id" exact component={CreateUpdateBerita} />
       </Switch>
     </div>
   );

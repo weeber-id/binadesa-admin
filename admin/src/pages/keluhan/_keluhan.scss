@@ -2,7 +2,7 @@
   .table {
     background-color: var(--color-green);
     border-radius: 3rem;
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     margin-top: 5rem;
 
@@ -60,6 +60,19 @@
       overflow: hidden;
       text-align: left;
       padding: 0 2rem;
+
+      &--loading {
+        height: 50%;
+
+        &::before {
+          border-radius: 4rem;
+          content: '';
+          height: 80%;
+          width: 100%;
+          display: block;
+          animation: colorTransition 1.5s ease infinite;
+        }
+      }
 
       &:last-child {
         text-align: center;

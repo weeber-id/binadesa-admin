@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { Button, Input, LoadingMessage } from '../../components';
 import { fetchRequest } from '../../hooks/use-request';
 import { urlServer } from '../../utils/urlServer';
-import Cookies from 'js-cookie';
 
 type LoginState = {
   username: string;
@@ -19,9 +18,11 @@ const LoginPage = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const token = Cookies.get('admin_token');
+    (async () => {
+      const { response } = await fetchRequest(`${urlServer}/admin/accounts`);
 
-    if (token) history.replace('/pengajuan');
+      if (response?.status === 200) history.replace('/pengajuan');
+    })();
   }, [history]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,10 +54,6 @@ const LoginPage = () => {
     else if (response?.status === 401)
       alert('Maaf, Username atau password yang anda masukkan salah.');
     else {
-      // if (process.env.NODE_ENV === 'development') {
-      //   const token = (await response?.json()).data.access_token;
-      //   Cookies.set('admin_token', token);
-      // }
       history.replace('/pengajuan');
     }
   };

@@ -5,6 +5,7 @@ import {
   Button,
   Dropdown,
   Header,
+  LoadingMessage,
   PageWrapper,
   Sidebar,
 } from '../../components';
@@ -25,6 +26,7 @@ export type DataPengajuan = {
 const Pengajuan = () => {
   const [dataPengajuan, setDataPengajuan] = useState<DataPengajuan[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [editLoading, setEditLoading] = useState<boolean>(false);
   const [edit, setEdit] = useState<string>('');
   const [statusCode, setStatusCode] = useState<number>(-1);
   const [kategori, setKategori] = useState<string>('');
@@ -34,15 +36,9 @@ const Pengajuan = () => {
   useEffect(() => {
     (async () => {
       let pengajuan: DataPengajuan[] = [];
-      const kk = await fetchRequest(
-        `${urlServer}/admin/submission/kartu-keluarga`
-      );
-      const akta = await fetchRequest(
-        `${urlServer}/admin/submission/akta-kelahiran`
-      );
-      const sk = await fetchRequest(
-        `${urlServer}/admin/submission/surat-keterangan`
-      );
+      const kk = fetchRequest(`${urlServer}/admin/submission/kartu-keluarga`);
+      const akta = fetchRequest(`${urlServer}/admin/submission/akta-kelahiran`);
+      const sk = fetchRequest(`${urlServer}/admin/submission/surat-keterangan`);
 
       Promise.all([kk, akta, sk]).then(async (values) => {
         for (let i = 0; i < values.length; i++) {
@@ -97,19 +93,20 @@ const Pengajuan = () => {
   };
 
   const handleSubmit = async () => {
+    setEditLoading(true);
     const body = JSON.stringify({
       status: `${statusCode}`,
     });
 
-    const { error } = await fetchRequest(
+    const { response, isLoading } = await fetchRequest(
       `${urlServer}/admin/submission/${kategori}/update?unique_code=${edit}`,
       {
         method: 'POST',
         body,
       }
     );
-
-    if (!error) window.location.reload();
+    setEditLoading(isLoading);
+    if (response?.status === 200) window.location.reload();
   };
 
   const handleSort = (val: string) => {
@@ -132,6 +129,7 @@ const Pengajuan = () => {
 
   return (
     <>
+      {editLoading && <LoadingMessage />}
       <Header />
       <Sidebar />
       <PageWrapper>

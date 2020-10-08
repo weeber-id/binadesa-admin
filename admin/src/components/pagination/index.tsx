@@ -10,8 +10,12 @@ const Pagination: React.FC<PaginationProps> = ({
   maxPage,
   currentPage,
   setCurrentPage,
+  className,
 }) => {
   const elements = [];
+  const paginationClassName = ['pagination'];
+
+  if (className) paginationClassName.push(className);
 
   for (let i = currentPage; i <= maxPage; i++) {
     const className = ['pagination__number'];
@@ -85,7 +89,7 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <div className="pagination">
+    <div className={paginationClassName.join(' ')}>
       <div onClick={() => onPrev(currentPage - 1)} className="pagination__prev">
         Prev
       </div>

@@ -1,9 +1,18 @@
 .berita {
   padding: 4rem;
+  display: grid;
+  grid-template-rows: 5rem 1fr auto;
+  gap: 5rem;
+
+  &__pagination {
+    justify-self: center;
+    margin-top: 2rem;
+  }
 
   & > .btn {
     margin-bottom: 4rem;
     align-self: flex-start;
+    justify-self: flex-start;
   }
 
   .cards {

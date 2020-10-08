@@ -1,7 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dropdown, Header, PageWrapper, Sidebar } from '../../components';
+import { fetchRequest } from '../../hooks/use-request';
+import { urlServer } from '../../utils/urlServer';
+
+type Complaint = {
+  id: string;
+  address: string;
+  complaint: string;
+  created_at: string;
+  name: string;
+  rt: string;
+  rw: string;
+};
 
 const Keluhan = () => {
+  const [complaints, setComplaints] = useState<Complaint[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const { response } = await fetchRequest(`${urlServer}/admin/complaints`);
+
+      if (response?.status === 200) {
+        const data = await response.json();
+        setComplaints(data.data);
+      }
+    })();
+  }, []);
+
   return (
     <>
       <Header />
@@ -25,12 +50,27 @@ const Keluhan = () => {
             </div>
             <div className="container">
               <div className="table__body">
-                <div className="table__row">
-                  <div className="table__column">Suparman</div>
-                  <div className="table__column">08986956006</div>
-                  <div className="table__column">Akta Kelahiran</div>
-                  <div className="table__column">On Process</div>
-                </div>
+                {complaints.length > 0
+                  ? complaints.map((val) => {
+                      return (
+                        <div key={val.id} className="table__row">
+                          <div className="table__column">{val.name}</div>
+                          <div className="table__column">{val.address}</div>
+                          <div className="table__column">{val.complaint}</div>
+                          <div className="table__column">Unread</div>
+                        </div>
+                      );
+                    })
+                  : [1, 2, 3, 4, 5, 6, 7, 8, 9].map((val) => {
+                      return (
+                        <div key={val} className="table__row">
+                          <div className="table__column table__column--loading"></div>
+                          <div className="table__column table__column--loading"></div>
+                          <div className="table__column table__column--loading"></div>
+                          <div className="table__column table__column--loading"></div>
+                        </div>
+                      );
+                    })}
               </div>
             </div>
           </div>

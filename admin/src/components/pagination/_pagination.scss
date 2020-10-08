@@ -5,8 +5,8 @@
   box-shadow: 0 4px 8px rgba(black, 0.25);
   border-radius: 1rem;
   padding: 1rem 2rem;
-  margin-bottom: 7rem;
   max-width: max-content;
+  min-width: 40rem;
 
   &__next {
     justify-self: flex-end;
@@ -21,6 +21,10 @@
     &:hover {
       color: var((--color-yellow));
     }
+  }
+
+  &__numbers {
+    justify-self: center;
   }
 
   &__number {

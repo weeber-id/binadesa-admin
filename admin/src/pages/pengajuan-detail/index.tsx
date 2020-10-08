@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { saveAs } from 'file-saver';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Header, PageWrapper, Sidebar } from '../../components';
+import {
+  Button,
+  Header,
+  LoadingMessage,
+  PageWrapper,
+  Sidebar,
+} from '../../components';
 import { useQuery } from '../../hooks/use-query';
 import { fetchRequest } from '../../hooks/use-request';
 import { urlServer } from '../../utils/urlServer';
@@ -10,6 +17,7 @@ const PengajuanDetail = () => {
   const [dataPengajuan, setDataPengajuan] = useState<DataPengajuan | null>(
     null
   );
+  const [loading, setLoading] = useState<boolean>(false);
   const [status, setStatus] = useState<string>('');
   const { id } = useParams<{ id: string }>();
   const kategori = useQuery().get('kategori');
@@ -42,8 +50,40 @@ const PengajuanDetail = () => {
     })();
   }, [id, kategori]);
 
+  const handleDownload = async () => {
+    setLoading(true);
+
+    const {
+      isLoading,
+      response,
+    } = await fetchRequest(
+      `${urlServer}/admin/media/private/download-submission?unique_code=${id}`,
+      { method: 'POST' }
+    );
+
+    if (response?.status === 200) {
+      const blob = await response.blob();
+      let filename = `${id}.zip`;
+
+      if (response.headers.get('content-disposition')) {
+        // @ts-ignore
+        filename = response.headers
+          .get('content-disposition')
+          .split(';')
+          .find((n) => n.includes('filename='))
+          .replace('filename=', '')
+          .trim();
+      }
+
+      saveAs(blob, filename);
+    }
+
+    setLoading(isLoading);
+  };
+
   return (
     <>
+      {loading && <LoadingMessage />}
       <Header />
       <Sidebar />
       <PageWrapper>
@@ -103,7 +143,9 @@ const PengajuanDetail = () => {
                       ></div>
                     ))}
               </ul>
-              <Button className="mt-3">Download Files</Button>
+              <Button onClick={handleDownload} className="mt-3">
+                Download Files
+              </Button>
             </div>
             <div className="info-pengajuan">
               <div className="info-pengajuan__heading mb-2">Info Pengajuan</div>
