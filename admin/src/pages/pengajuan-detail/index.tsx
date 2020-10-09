@@ -19,6 +19,8 @@ const PengajuanDetail = () => {
   );
   const [loading, setLoading] = useState<boolean>(false);
   const [status, setStatus] = useState<string>('');
+  const [contentLength, setContentLength] = useState<number>(1);
+  const [downloadedValue, setDownloadedValue] = useState<number>(0);
   const { id } = useParams<{ id: string }>();
   const kategori = useQuery().get('kategori');
 
@@ -61,8 +63,42 @@ const PengajuanDetail = () => {
       { method: 'POST' }
     );
 
-    if (response?.status === 200) {
-      const blob = await response.blob();
+    if (response?.status === 200 && response.body) {
+      // const blob = await response.blob();
+      const reader = response.body.getReader();
+
+      // Step 2: get total length
+      // @ts-ignore
+      const cl = +response.headers.get('Content-Length');
+
+      setContentLength(cl);
+
+      // Step 3: read the data
+      let receivedLength = 0; // received that many bytes at the moment
+      let chunks = []; // array of received binary chunks (comprises the body)
+      while (true) {
+        const { done, value } = await reader.read();
+
+        if (done) {
+          break;
+        }
+        if (value) {
+          chunks.push(value);
+          receivedLength += value.length;
+        }
+        setDownloadedValue(receivedLength);
+      }
+
+      // Step 4: concatenate chunks into single Uint8Array
+      let chunksAll = new Uint8Array(receivedLength); // (4.1)
+      let position = 0;
+      for (let chunk of chunks) {
+        chunksAll.set(chunk, position); // (4.2)
+        position += chunk.length;
+      }
+
+      const blob = new Blob([chunksAll]);
+
       let filename = `${id}.zip`;
 
       if (response.headers.get('content-disposition')) {
@@ -83,7 +119,14 @@ const PengajuanDetail = () => {
 
   return (
     <>
-      {loading && <LoadingMessage />}
+      {loading && (
+        <LoadingMessage
+          message={`Downloading ${(
+            (downloadedValue / contentLength) *
+            100
+          ).toFixed(0)}%`}
+        />
+      )}
       <Header />
       <Sidebar />
       <PageWrapper>
