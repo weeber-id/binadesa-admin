@@ -1,13 +1,17 @@
 import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
+import { useUserDispatch } from '../../contexts/user-context';
 import { fetchRequest } from '../../hooks/use-request';
 import { urlServer } from '../../utils/urlServer';
 
 const Sidebar = () => {
+  const dispatch = useUserDispatch();
   const history = useHistory();
   const handleLogout = async () => {
     await fetchRequest(`${urlServer}/logout`, { method: 'POST' });
-    history.replace('/');
+    dispatch({ type: 'DELETE_USER' });
+
+    history.replace('/login?type=logout');
   };
 
   return (

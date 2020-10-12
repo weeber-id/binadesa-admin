@@ -18,6 +18,9 @@
       font-size: 2rem;
       font-weight: 700;
       color: var(--color-green);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     &__key,
@@ -36,9 +39,16 @@
   }
 
   .info-pengajuan {
+    display: flex;
+    flex-direction: column;
+
     &__details {
       display: grid;
       grid-template-columns: 12rem 1fr;
+    }
+
+    .btn {
+      margin-top: auto;
     }
   }
 }

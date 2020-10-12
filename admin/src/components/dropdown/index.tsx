@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IconDropdownArrow } from '../../assets';
 import useOutside from '../../hooks/use-outside';
 
@@ -6,6 +6,7 @@ interface DropdownProps extends React.HTMLProps<HTMLDivElement> {
   options?: string[];
   onChangeOptions?(value: string): void;
   placeholder?: string;
+  value?: string;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -14,12 +15,21 @@ const Dropdown: React.FC<DropdownProps> = ({
   placeholder,
   style,
   className,
+  value,
 }) => {
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const [hidden, setHidden] = useState<boolean>(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const dropdownClassName = ['dropdown'];
   if (className) dropdownClassName.push(className);
+
+  useEffect(() => {
+    if (value && value?.length > 0) {
+      const idx = options?.indexOf(value);
+
+      if (idx !== undefined) setActiveIndex(idx);
+    }
+  }, [value, options]);
 
   useOutside(dropdownRef, () => {
     setHidden(true);

@@ -4,3 +4,4 @@ export { ReactComponent as IconSuccessMessage } from './ic-success-message.svg';
 export { ReactComponent as IconChecklist } from './ic-checklist.svg';
 export { ReactComponent as IconCancel } from './ic-cancel.svg';
 export { ReactComponent as IconEdit } from './ic-edit.svg';
+export { ReactComponent as IconSearch } from './ic-search.svg';

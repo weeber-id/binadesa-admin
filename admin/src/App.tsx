@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { useUserDispatch } from './contexts/user-context';
+import { fetchRequest } from './hooks/use-request';
 import {
   Berita,
   Keluhan,
@@ -9,8 +11,26 @@ import {
   CreateUpdateBerita,
 } from './pages';
 import KeluhanDetail from './pages/keluhan-detail';
+import { urlServer } from './utils/urlServer';
 
 function App() {
+  const userDispatch = useUserDispatch();
+
+  useEffect(() => {
+    (async () => {
+      const { response } = await fetchRequest(`${urlServer}/admin/account`);
+      if (response?.status === 200) {
+        const data = await response.json();
+        let adminLevel = '';
+        if (data.data.level === 0) adminLevel = 'Super Admin';
+        userDispatch({
+          type: 'SET_USER',
+          state: { ...data.data, level: adminLevel },
+        });
+      }
+    })();
+  }, [userDispatch]);
+
   return (
     <div className="App">
       <Switch>

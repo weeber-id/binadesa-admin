@@ -46,3 +46,17 @@
 .mt-5 {
   margin-top: 5rem;
 }
+
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($color-black, 0.25);
+  }
+}

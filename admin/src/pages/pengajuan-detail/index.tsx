@@ -3,6 +3,7 @@ import { saveAs } from 'file-saver';
 import { Link, useParams } from 'react-router-dom';
 import {
   Button,
+  Dropdown,
   Header,
   LoadingMessage,
   PageWrapper,
@@ -12,6 +13,7 @@ import { useQuery } from '../../hooks/use-query';
 import { fetchRequest } from '../../hooks/use-request';
 import { urlServer } from '../../utils/urlServer';
 import { DataPengajuan } from '../pengajuan';
+import { IconCancel, IconEdit } from '../../assets';
 
 const PengajuanDetail = () => {
   const [dataPengajuan, setDataPengajuan] = useState<DataPengajuan | null>(
@@ -21,6 +23,9 @@ const PengajuanDetail = () => {
   const [status, setStatus] = useState<string>('');
   const [contentLength, setContentLength] = useState<number>(1);
   const [downloadedValue, setDownloadedValue] = useState<number>(0);
+  const [edit, setEdit] = useState<boolean>(false);
+  const [statusCode, setStatusCode] = useState<number>(-1);
+  const [editLoading, setEditLoading] = useState<boolean>(false);
   const { id } = useParams<{ id: string }>();
   const kategori = useQuery().get('kategori');
 
@@ -51,6 +56,32 @@ const PengajuanDetail = () => {
       }
     })();
   }, [id, kategori]);
+
+  const handleChange = (val: string) => {
+    if (val === 'Waiting') setStatusCode(0);
+    else if (val === 'On Process') setStatusCode(1);
+    else if (val === 'Rejected') setStatusCode(2);
+    else setStatusCode(3);
+
+    setStatus(val);
+  };
+
+  const handleSubmit = async () => {
+    setEditLoading(true);
+    const body = JSON.stringify({
+      status: `${statusCode}`,
+    });
+
+    const { response, isLoading } = await fetchRequest(
+      `${urlServer}/admin/submission/${kategori}/update?unique_code=${id}`,
+      {
+        method: 'POST',
+        body,
+      }
+    );
+    setEditLoading(isLoading);
+    if (response?.status === 200) window.location.reload();
+  };
 
   const handleDownload = async () => {
     setLoading(true);
@@ -127,6 +158,7 @@ const PengajuanDetail = () => {
           ).toFixed(0)}%`}
         />
       )}
+      {editLoading && <LoadingMessage />}
       <Header />
       <Sidebar />
       <PageWrapper>
@@ -191,7 +223,18 @@ const PengajuanDetail = () => {
               </Button>
             </div>
             <div className="info-pengajuan">
-              <div className="info-pengajuan__heading mb-2">Info Pengajuan</div>
+              <div className="info-pengajuan__heading mb-2">
+                <span>Info Pengajuan</span>
+                {edit ? (
+                  <div onClick={() => setEdit(false)} className="icon-wrapper">
+                    <IconCancel />
+                  </div>
+                ) : (
+                  <div onClick={() => setEdit(true)} className="icon-wrapper">
+                    <IconEdit />
+                  </div>
+                )}
+              </div>
               <div className="info-pengajuan__details">
                 <div className="info-pengajuan__key mb-1">Kategori :</div>
                 <div
@@ -203,8 +246,22 @@ const PengajuanDetail = () => {
               </div>
               <div className="info-pengajuan__details">
                 <div className="info-pengajuan__key mb-1">Status :</div>
-                <div className="info-pengajuan__value">
-                  {dataPengajuan ? (
+                <div
+                  className={`info-pengajuan__value ${edit ? 'mb-2' : null}`}
+                >
+                  {edit ? (
+                    <Dropdown
+                      placeholder={status}
+                      options={[
+                        'Waiting',
+                        'On Process',
+                        'Rejected',
+                        'Accepted',
+                      ]}
+                      value={status}
+                      onChangeOptions={handleChange}
+                    />
+                  ) : dataPengajuan ? (
                     status
                   ) : (
                     <div className="line-loading"></div>
@@ -231,6 +288,7 @@ const PengajuanDetail = () => {
                   )}
                 </div>
               </div>
+              {edit && <Button onClick={handleSubmit}>Submit</Button>}
             </div>
           </div>
         </div>

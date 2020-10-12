@@ -1,14 +1,15 @@
 .input {
   &__input {
     border: none;
-    padding: 1rem 2rem;
-    font-size: 1.8rem;
-    background-color: var(--color-white);
+    font-size: 1.6rem;
     color: var(--color-black);
-    border-radius: 1rem;
     font-family: 'Montserrat', 'Segoe UI', sans-serif;
     min-width: unset;
     width: 100%;
+
+    &:-internal-autofill-selected {
+      background-color: unset !important;
+    }
 
     @media only screen and (max-width: 31.25em) {
       font-size: 1.4rem;
@@ -16,6 +17,10 @@
 
     &--grey {
       background-color: var(--color-grey);
+    }
+
+    &--front {
+      width: calc(100% - 3rem);
     }
 
     &:focus {
@@ -31,6 +36,15 @@
     color: var(--color-white);
     font-size: 1.8rem;
     font-weight: 700;
+  }
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background-color: var(--color-white);
+    border-radius: 1rem;
   }
 }
 

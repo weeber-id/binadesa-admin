@@ -19,6 +19,7 @@
   &__option {
     cursor: pointer;
     padding: 1rem 2rem;
+    font-size: 1.4rem;
 
     &:hover {
       background-color: var(--color-yellow);
@@ -34,6 +35,12 @@
     align-items: center;
     grid-template-columns: 1fr 1.4rem;
     padding: 1rem 2rem;
+    gap: 2rem;
+
+    svg {
+      height: 10px;
+      width: 10px;
+    }
   }
 
   &__text {
@@ -44,10 +51,6 @@
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-
-    @media only screen and (max-width: 31.25em) {
-      font-size: 1.4rem;
-    }
 
     &.active {
       color: var(--color-black);

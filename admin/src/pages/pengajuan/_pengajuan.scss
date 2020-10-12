@@ -12,6 +12,16 @@
       justify-content: space-between;
       padding: 4rem 8rem 2rem 8rem;
 
+      .input {
+        &__container {
+          width: 30rem;
+        }
+
+        &__input {
+          font-size: 1.4rem;
+        }
+      }
+
       .heading-tertiary {
         color: var(--color-white);
       }
@@ -20,7 +30,7 @@
     &__head,
     &__row {
       display: grid;
-      grid-template-columns: repeat(2, 2fr) 2.4fr 3fr 1.5fr 2fr;
+      grid-template-columns: 1.5fr repeat(2, 2fr) 2.4fr 3fr 1.5fr 2fr;
       height: 6rem;
       align-items: center;
     }
@@ -55,7 +65,7 @@
       overflow: hidden;
       text-align: left;
       padding: 0 2rem;
-      font-size: 1.4rem;
+      font-size: 1.2rem;
 
       &--non-overflow {
         overflow: unset;
@@ -82,19 +92,6 @@
         align-items: stretch;
       }
 
-      .icon-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 3rem;
-        width: 3rem;
-        border-radius: 50%;
-
-        &:hover {
-          background-color: rgba($color-black, 0.25);
-        }
-      }
-
       .icons {
         display: flex;
         align-items: center;
@@ -106,6 +103,7 @@
 
       .dropdown {
         box-shadow: 0 4px 8px rgba($color-black, 0.25);
+        width: 100%;
       }
     }
   }

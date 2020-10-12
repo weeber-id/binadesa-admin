@@ -7,6 +7,8 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   fileName?: string;
   onCancel?(): void;
   indexPengajuanForm?: number;
+  IconFront?: any;
+  IconBack?: any;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -22,6 +24,8 @@ const Input: React.FC<InputProps> = ({
   fileName,
   onCancel,
   indexPengajuanForm,
+  IconFront,
+  IconBack,
   ...otherProps
 }) => {
   const inputClassName = ['input__input'];
@@ -41,6 +45,7 @@ const Input: React.FC<InputProps> = ({
   }, [fileName, indexPengajuanForm]);
 
   if (bgColor === 'grey') inputClassName.push('input__input--grey');
+  if (IconFront) inputClassName.push('input__input--front');
   if (className && type === 'text') inputTextContainerClassName.push(className);
 
   if (type === 'radio') {
@@ -95,6 +100,7 @@ const Input: React.FC<InputProps> = ({
 
   return (
     <div className={inputTextContainerClassName.join(' ')}>
+      {IconFront && <IconFront />}
       <input
         {...otherProps}
         className={inputClassName.join(' ')}
@@ -104,6 +110,7 @@ const Input: React.FC<InputProps> = ({
         required={required}
         name={name}
       />
+      {IconBack && <IconBack />}
     </div>
   );
 };
