@@ -9,6 +9,7 @@ interface Button
   isExternal?: boolean;
   url?: string;
   onClick?(e: React.MouseEvent<HTMLElement, MouseEvent>): void;
+  isDisabled?: boolean;
 }
 
 const Button: React.FC<Button> = ({
@@ -19,6 +20,7 @@ const Button: React.FC<Button> = ({
   type,
   url,
   isExternal,
+  isDisabled,
   ...otherProps
 }) => {
   const btnClassName = ['btn'];
@@ -27,6 +29,11 @@ const Button: React.FC<Button> = ({
   if (color === 'white') btnClassName.push('btn--white');
   if (color === 'green') btnClassName.push('btn--green');
   if (color === 'grey') btnClassName.push('btn--grey');
+  if (isDisabled) btnClassName.push('btn--disable');
+
+  if (isDisabled) {
+    return <button className={btnClassName.join(' ')}>{children}</button>;
+  }
 
   if (isExternal) {
     return (

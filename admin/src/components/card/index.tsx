@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../button';
 
-export interface Card extends React.Attributes {
+export interface Card extends React.HTMLProps<HTMLDivElement> {
   title?: string;
   description?: string;
   img?: string;
@@ -9,6 +9,8 @@ export interface Card extends React.Attributes {
   date?: string;
   isLoading?: boolean;
   url?: string;
+  onEdit?(): void;
+  onDelete?(): void;
 }
 
 const Card: React.FC<Card> = ({
@@ -19,6 +21,9 @@ const Card: React.FC<Card> = ({
   isLoading,
   url = '#',
   key,
+  onEdit,
+  onDelete,
+  children,
 }) => {
   if (isLoading) {
     return (
@@ -44,8 +49,10 @@ const Card: React.FC<Card> = ({
         <h3 className="heading-tertiary">{title}</h3>
         <h4 className="card__date">{date}</h4>
         <div className="card__buttons">
-          <Button>Edit</Button>
-          <Button color="grey">Delete</Button>
+          <Button onClick={onEdit}>Edit</Button>
+          <Button onClick={onDelete} color="grey">
+            Hapus
+          </Button>
         </div>
       </div>
     </div>

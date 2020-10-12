@@ -9,6 +9,7 @@ import LoadingMessage from './loading-message';
 import Pagination from './pagination';
 import PageWrapper from './page-wrapper';
 import Sidebar from './sidebar';
+import Dialog from './dialog';
 
 export {
   Header,
@@ -22,4 +23,5 @@ export {
   Pagination,
   PageWrapper,
   Sidebar,
+  Dialog,
 };

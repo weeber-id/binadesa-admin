@@ -37,12 +37,6 @@
     }
 
     &__row {
-      cursor: pointer;
-
-      &:hover {
-        background-color: rgba($color-green, 0.2);
-      }
-
       &:not(:last-child) {
         border-bottom: 1px solid var(--color-black);
       }

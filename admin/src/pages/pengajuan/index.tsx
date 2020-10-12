@@ -42,16 +42,18 @@ const Pengajuan = () => {
 
       Promise.all([kk, akta, sk]).then(async (values) => {
         for (let i = 0; i < values.length; i++) {
-          const res = await values[i].response?.json();
+          if (values[i].response?.status === 200) {
+            const res = await values[i].response?.json();
 
-          const d = res.data?.map((data: DataPengajuan) => {
-            if (i === 0) data.kategori = 'Kartu Keluarga';
-            else if (i === 1) data.kategori = 'Akta Kelahiran';
-            else data.kategori = 'Surat Keterangan';
+            const d = res.data?.map((data: DataPengajuan) => {
+              if (i === 0) data.kategori = 'Kartu Keluarga';
+              else if (i === 1) data.kategori = 'Akta Kelahiran';
+              else data.kategori = 'Surat Keterangan';
 
-            return data;
-          });
-          if (d) pengajuan = pengajuan.concat(d);
+              return data;
+            });
+            if (d) pengajuan = pengajuan.concat(d);
+          }
         }
 
         const sortedPengajuan = pengajuan.sort((a, b) => {

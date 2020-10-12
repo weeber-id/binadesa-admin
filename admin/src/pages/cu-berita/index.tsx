@@ -1,7 +1,5 @@
 import { API, OutputData } from '@editorjs/editorjs';
-// @ts-ignore
-import edjsHTML from '../../utils/editorjs-to-html';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EditorJs from 'react-editor-js';
 import {
   Button,
@@ -14,12 +12,37 @@ import {
 import { fetchRequest } from '../../hooks/use-request';
 import { urlServer } from '../../utils/urlServer';
 import { EDITOR_JS_TOOLS } from './plugins';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useQuery } from '../../hooks/use-query';
+
+type UpdateBeritaState = {
+  title: string;
+  image_cover: string;
+  id: string;
+  content: OutputData;
+};
 
 const CreateUpdateBerita = () => {
   const [bgUrl, setBgUrl] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [content, setContent] = useState<OutputData>();
-  const [contentToSave, setContentTosave] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
+  const [isDisabled, setDisabled] = useState<boolean>(true);
+  const { state } = useLocation<UpdateBeritaState>();
+  const type = useQuery().get('type');
+  const history = useHistory();
+
+  useEffect(() => {
+    if (type === 'edit') {
+      setContent(state.content);
+      setTitle(state.title);
+      setBgUrl(state.image_cover);
+    }
+  }, [state, type]);
+
+  useEffect(() => {
+    if (bgUrl.length > 0 && title.length > 0 && content) setDisabled(false);
+  }, [bgUrl, title, content]);
 
   const handleChangeBG = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
@@ -45,13 +68,33 @@ const CreateUpdateBerita = () => {
     setLoading(false);
   };
 
-  const handleChange = async (api: API, data?: OutputData) => {
+  const handleChange = (api: API, data?: OutputData) => {
     setContent(data);
-    const edjsParser = edjsHTML();
+  };
 
-    if (data) {
-      let html = edjsParser.parse(data);
-      setContentTosave(html.join('\n'));
+  const handleSave = async () => {
+    setLoading(true);
+
+    const body = {
+      author: 'Admin Bina Desa',
+      title,
+      image_cover: bgUrl,
+      content: JSON.stringify(content),
+    };
+
+    let urlFetch = `${urlServer}/admin/news`;
+
+    if (type === 'edit')
+      urlFetch = `${urlServer}/admin/news/update?id=${state.id}`;
+
+    const { response } = await fetchRequest(urlFetch, {
+      method: 'POST',
+      body: JSON.stringify(body),
+    });
+
+    setLoading(false);
+    if (response?.status.toString().startsWith('2')) {
+      history.push('/berita');
     }
   };
 
@@ -62,11 +105,19 @@ const CreateUpdateBerita = () => {
       <Sidebar />
       <PageWrapper>
         <div className="cu-berita">
-          <Button className="cu-berita__btn">Save Post</Button>
+          <Button
+            isDisabled={isDisabled}
+            onClick={handleSave}
+            className="cu-berita__btn"
+          >
+            Save Post
+          </Button>
           <input
             className="cu-berita__input"
             type="text"
             placeholder="Tulis Judul Disini"
+            onChange={(e) => setTitle(e.target.value)}
+            value={title}
           />
           <Input
             placeholder="Upload background"
@@ -79,12 +130,21 @@ const CreateUpdateBerita = () => {
             onCancel={() => setBgUrl('')}
           />
           <div style={{ marginBottom: '3rem' }}></div>
-          <EditorJs
-            onChange={handleChange}
-            tools={EDITOR_JS_TOOLS}
-            data={content}
-            placeholder="Tulis Artikel disini"
-          />
+          {type === 'edit' && content ? (
+            <EditorJs
+              onChange={handleChange}
+              tools={EDITOR_JS_TOOLS}
+              data={content}
+              placeholder="Tulis Artikel disini"
+            />
+          ) : !type ? (
+            <EditorJs
+              onChange={handleChange}
+              tools={EDITOR_JS_TOOLS}
+              data={content}
+              placeholder="Tulis Artikel disini"
+            />
+          ) : null}
         </div>
       </PageWrapper>
     </>

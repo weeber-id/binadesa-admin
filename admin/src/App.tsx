@@ -8,6 +8,7 @@ import {
   PengajuanDetail,
   CreateUpdateBerita,
 } from './pages';
+import KeluhanDetail from './pages/keluhan-detail';
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
         <Route path="/keluhan" exact component={Keluhan} />
         <Route path="/berita" exact component={Berita} />
         <Route path="/pengajuan/:id" exact component={PengajuanDetail} />
-        <Route path="/berita/:id" exact component={CreateUpdateBerita} />
+        <Route path="/berita/create" exact component={CreateUpdateBerita} />
+        <Route path="/keluhan/:id" exact component={KeluhanDetail} />
       </Switch>
     </div>
   );

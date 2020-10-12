@@ -20,14 +20,16 @@
     &__head,
     &__row {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 2fr) repeat(2, 1fr);
       height: 5rem;
       align-items: center;
+      font-size: 1.4rem;
     }
 
     &__head {
       background-color: var(--color-yellow);
       padding: 0 8rem;
+      font-weight: 700;
     }
 
     .container {
@@ -36,12 +38,6 @@
     }
 
     &__row {
-      cursor: pointer;
-
-      &:hover {
-        background-color: rgba($color-green, 0.2);
-      }
-
       &:not(:last-child) {
         border-bottom: 1px solid var(--color-black);
       }
@@ -78,6 +74,10 @@
         text-align: center;
         display: flex;
         justify-content: center;
+      }
+
+      .btn {
+        font-size: 1.6rem;
       }
 
       .icon-wrapper {

@@ -1,0 +1,47 @@
+.keluhan-detail {
+  padding: 4rem;
+
+  .data-pengeluh {
+    padding: 2rem 3.5rem 3rem 3.5rem;
+    margin-bottom: 3rem;
+    .heading-tertiary {
+      color: var(--color-green);
+      font-size: 2.4rem;
+    }
+
+    .paragraph {
+      color: #656565;
+      font-weight: 500;
+    }
+  }
+
+  .data-keluhan {
+    padding: 4rem;
+
+    &__container {
+      background-color: var(--color-white);
+      border-radius: 1rem;
+      padding: 2rem 4rem;
+    }
+    &__card {
+      padding-top: 3px;
+      min-height: 40rem;
+      overflow: auto;
+      background: repeating-linear-gradient(
+        white 0px,
+        white 27px,
+        #656565 28px
+      );
+    }
+
+    .paragraph {
+      font-weight: 600;
+    }
+  }
+
+  .data-pengeluh,
+  .data-keluhan {
+    background-color: var(--color-transparent-green);
+    border-radius: 2rem;
+  }
+}
