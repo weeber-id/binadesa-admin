@@ -23,6 +23,7 @@ export type DataPengajuan = {
   created_at: string;
   file: { [key: string]: string };
   nama: string;
+  tipe?: string;
 };
 
 const Pengajuan = () => {

@@ -253,7 +253,12 @@ const PengajuanDetail = () => {
                   style={{ textTransform: 'capitalize' }}
                   className="info-pengajuan__value"
                 >
-                  {kategori?.split('-').join(' ')}
+                  {dataPengajuan?.unique_code ? (
+                    kategori?.split('-').join(' ') +
+                    ` ${dataPengajuan?.tipe ? dataPengajuan.tipe : ''}`
+                  ) : (
+                    <div className="line-loading"></div>
+                  )}
                 </div>
               </div>
               <div className="info-pengajuan__details">
