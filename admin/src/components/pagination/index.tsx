@@ -4,6 +4,7 @@ interface PaginationProps extends React.HTMLAttributes<HTMLDivElement> {
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   maxPage: number;
+  isDisabled?: boolean;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -11,6 +12,7 @@ const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   setCurrentPage,
   className,
+  isDisabled,
 }) => {
   const elements = [];
   const paginationClassName = ['pagination'];
@@ -23,7 +25,9 @@ const Pagination: React.FC<PaginationProps> = ({
     elements.push(
       <span
         key={`pagination-${i}`}
-        onClick={() => setCurrentPage(i)}
+        onClick={() => {
+          if (!isDisabled) setCurrentPage(i);
+        }}
         className={className.join(' ')}
       >
         {i}
@@ -37,7 +41,9 @@ const Pagination: React.FC<PaginationProps> = ({
         elements.unshift(
           <span
             key={`pagination-${i}`}
-            onClick={() => setCurrentPage(i)}
+            onClick={() => {
+              if (!isDisabled) setCurrentPage(i);
+            }}
             className="pagination__number"
           >
             {i}
@@ -57,7 +63,9 @@ const Pagination: React.FC<PaginationProps> = ({
           elements.unshift(
             <span
               key={`pagination-${i}`}
-              onClick={() => setCurrentPage(i)}
+              onClick={() => {
+                if (!isDisabled) setCurrentPage(i);
+              }}
               className="pagination__number"
             >
               {i}
@@ -70,7 +78,9 @@ const Pagination: React.FC<PaginationProps> = ({
           elements.unshift(
             <span
               key={`pagination-${i}`}
-              onClick={() => setCurrentPage(i)}
+              onClick={() => {
+                if (!isDisabled) setCurrentPage(i);
+              }}
               className="pagination__number"
             >
               {i}
@@ -81,11 +91,11 @@ const Pagination: React.FC<PaginationProps> = ({
   }
 
   const onNext = (i: number) => {
-    if (i <= maxPage) setCurrentPage(i);
+    if (i <= maxPage && !isDisabled) setCurrentPage(i);
   };
 
   const onPrev = (i: number) => {
-    if (i > 0) setCurrentPage(i);
+    if (i > 0 && !isDisabled) setCurrentPage(i);
   };
 
   return (

@@ -30,7 +30,7 @@
     &__head,
     &__row {
       display: grid;
-      grid-template-columns: 1.5fr repeat(2, 2fr) 2.4fr 3fr 1.5fr 2fr;
+      grid-template-columns: 1.5fr repeat(3, 2.4fr) 3fr 1.5fr 2fr;
       height: 6rem;
       align-items: center;
     }

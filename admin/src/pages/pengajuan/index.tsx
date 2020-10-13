@@ -22,6 +22,7 @@ export type DataPengajuan = {
   unique_code: string;
   created_at: string;
   file: { [key: string]: string };
+  nama: string;
 };
 
 const Pengajuan = () => {
@@ -163,7 +164,7 @@ const Pengajuan = () => {
             <div className="table__head">
               <div className="table__column">ID</div>
               <div className="table__column">Nama</div>
-              <div className="table__column">Email</div>
+              <div className="table__column">Tanggal</div>
               <div className="table__column">Kategori</div>
               <div className="table__column">Status</div>
               <div className="table__column">Edit</div>
@@ -182,10 +183,12 @@ const Pengajuan = () => {
                       return (
                         <div key={val.id} className="table__row">
                           <div className="table__column">{val.unique_code}</div>
+                          <div className="table__column">{val.nama}</div>
                           <div className="table__column">
-                            {val.nama_kepala_keluarga}
+                            {new Intl.DateTimeFormat('id-ID').format(
+                              new Date(val.created_at)
+                            )}
                           </div>
-                          <div className="table__column">{val.email}</div>
                           <div className="table__column">{val.kategori}</div>
                           <div className="table__column table__column--non-overflow">
                             {edit === val.unique_code ? (

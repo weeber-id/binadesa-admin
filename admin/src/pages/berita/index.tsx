@@ -27,11 +27,13 @@ const Berita = () => {
   const [maxPage, setMaxPage] = useState<number>(1);
   const [idToDelete, setIdToDelete] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingContent, setLoadingContent] = useState<boolean>(false);
 
   const history = useHistory();
 
   useEffect(() => {
     (async () => {
+      setLoadingContent(true);
       const { response } = await fetchRequest(
         `${urlServer}/news?page=${currentPage}&content_per_page=12`
       );
@@ -40,6 +42,7 @@ const Berita = () => {
         const data = await response.json();
         setMaxPage(data.max_page);
         setNews(data.data);
+        setLoadingContent(false);
       }
     })();
   }, [currentPage]);
@@ -71,7 +74,7 @@ const Berita = () => {
             Tambahkan Artikel
           </Button>
           <div className="cards">
-            {news.length > 0
+            {!loadingContent
               ? news.map((val) => {
                   const date = new Intl.DateTimeFormat('id-ID', {
                     year: 'numeric',
@@ -108,6 +111,7 @@ const Berita = () => {
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             maxPage={maxPage}
+            isDisabled={loadingContent}
           />
         </div>
       </PageWrapper>

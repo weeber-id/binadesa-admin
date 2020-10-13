@@ -175,10 +175,22 @@ const PengajuanDetail = () => {
             <div className="data-pengaju">
               <div className="data-pengaju__heading mb-2">Data Pengaju</div>
               <div className="data-pengaju__details">
-                <div className="data-pengaju__key mb-1">Nama :</div>
+                <div className="data-pengaju__key mb-1">
+                  Nama Kepala Keluarga :
+                </div>
                 <div className="data-pengaju__value">
                   {dataPengajuan?.nama_kepala_keluarga ? (
                     dataPengajuan.nama_kepala_keluarga
+                  ) : (
+                    <div className="line-loading"></div>
+                  )}
+                </div>
+              </div>
+              <div className="data-pengaju__details">
+                <div className="data-pengaju__key mb-1">Nama Pengaju :</div>
+                <div className="data-pengaju__value">
+                  {dataPengajuan?.nama ? (
+                    dataPengajuan.nama
                   ) : (
                     <div className="line-loading"></div>
                   )}
