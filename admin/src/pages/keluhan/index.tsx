@@ -43,6 +43,7 @@ const Keluhan = () => {
             <div className="table__head">
               <div className="table__column">Nama</div>
               <div className="table__column">Alamat</div>
+              <div className="table__column">Tanggal</div>
               <div className="table__column">Keluhan</div>
               <div className="table__column">Status</div>
               <div className="table__column">View</div>
@@ -57,6 +58,11 @@ const Keluhan = () => {
                         <div key={val.id} className="table__row">
                           <div className="table__column">{val.name}</div>
                           <div className="table__column">{address}</div>
+                          <div className="table__column">
+                            {new Intl.DateTimeFormat('id-ID').format(
+                              new Date(val.created_at)
+                            )}
+                          </div>
                           <div className="table__column">{val.complaint}</div>
                           <div className="table__column">
                             {val.is_read ? 'Read' : 'Unread'}
