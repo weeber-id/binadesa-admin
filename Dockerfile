@@ -1,7 +1,7 @@
 # Stage 1 - the build process
 FROM node:12.14.1-alpine3.10 as build-deps
 WORKDIR /usr/src/app
-COPY client/ ./
+COPY admin/ ./
 RUN npm install
 RUN npm run-script build
 
