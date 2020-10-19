@@ -1,0 +1,57 @@
+jobs:
+  build-upload-master:
+    docker:
+      - image: docker:19.03.8
+    environment:
+      IMAGE_NAME: bayu3490/binadesa-admin
+    working_directory: /app
+    resource_class: small
+    steps:
+      - checkout
+      - setup_remote_docker
+
+      - run:
+          name: Give version tag to Docker Image
+          command: |
+            echo 'export IMAGE_NAME=${IMAGE_NAME}:`cat VERSION`' >> $BASH_ENV
+            source $BASH_ENV
+            echo $IMAGE_NAME
+            
+      - run:
+          name: Build Docker Image
+          command: |
+            source $BASH_ENV
+            docker build -t $IMAGE_NAME .
+
+      - run:
+          name: Run Test Docker Container
+          command: | 
+            source $BASH_ENV
+            docker run -d --rm $IMAGE_NAME
+
+      - run:
+          name: Check Docker Container
+          command: docker ps -a
+      
+      - run:
+          name: Delete Docker Container
+          command: docker stop $(docker ps -aq)
+
+      - run:
+          name: Authentication to Container Registry
+          command: echo $access_token | docker login --username bayu3490 --password-stdin
+
+      - run:
+          name: Pushing Docker Image to Container Registry
+          command: docker push $IMAGE_NAME
+
+workflows:
+  version: 2
+  build-and-upload-master:
+    jobs:
+      - build-upload-master:
+          filters:
+            branches:
+              only: master
+            tags:
+              only: /^v.*/
