@@ -1,1 +1,1 @@
-export const urlServer = 'https://staging-binadesa.weeber.id/api';
+export const urlServer = 'https://telukjambe.id/api';
