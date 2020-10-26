@@ -55,10 +55,10 @@ const LoginPage = () => {
       password: '',
     });
 
-    if (error) console.log(error);
-    else if (response?.status === 401)
+    if (response?.status === 401) {
       alert('Maaf, Username atau password yang anda masukkan salah.');
-    else {
+      console.log(error);
+    } else {
       history.replace('/pengajuan');
     }
   };

@@ -10,6 +10,7 @@ export const fetchRequest = async (
       ...opt,
       credentials: 'include',
     });
+    response = res;
 
     if (res.status === 400) error = 'Bad Request';
     else if (res.status === 401)
